@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test SQLite Front</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+<body>
+  <h1>SQLite Front Test</h1>
+  <button id="addBtn">Ajouter produit</button>
+  <button id="showBtn">Afficher produits</button>
+  <pre id="output"></pre>
+
+<script>
+let SQL, db;
+
+// Utilities base64 <-> Uint8Array
+function u8ToBase64(u8){let CHUNK=0x8000,i=0,s='';while(i<u8.length){s+=String.fromCharCode.apply(null,u8.subarray(i,Math.min(i+CHUNK,u8.length)));i+=CHUNK;}return btoa(s);}
+function base64ToU8(b64){const bin=atob(b64),u8=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);return u8;}
+function saveToStorage(){ const data=db.export(); localStorage.setItem('sqlite_db', u8ToBase64(data)); }
+
+// Init SQLite in browser
+async function initDB(){
+  SQL = await initSqlJs({ locateFile:file=>`https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+  const b64 = localStorage.getItem('sqlite_db');
+  if(b64){
+    db = new SQL.Database(base64ToU8(b64));
+    console.log("DB loaded from localStorage");
+  } else {
+    db = new SQL.Database();
+    db.run(`CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price REAL);`);
+    saveToStorage();
+  }
+}
+
+// Add product
+function addProduct(name, price){
+  db.run("INSERT INTO products (name, price) VALUES (?, ?);", [name, price]);
+  saveToStorage();
+}
+
+// Get all products
+function getAllProducts(){
+  const res = db.exec("SELECT id, name, price FROM products ORDER BY id DESC;");
+  if(!res || res.length===0) return [];
+  const cols = res[0].columns;
+  return res[0].values.map(row=>{
+    let obj={};
+    row.forEach((v,i)=>obj[cols[i]]=v);
+    return obj;
+  });
+}
+
+// TEST
+$(async ()=>{
+  await initDB();
+
+  $('#addBtn').click(()=>{
+    const name = 'Produit '+Math.floor(Math.random()*100);
+    const price = Math.random()*100;
+    addProduct(name, price);
+    alert('Produit ajouté : '+name);
+  });
+
+  $('#showBtn').click(()=>{
+    const products = getAllProducts();
+    $('#output').text(JSON.stringify(products, null, 2));
+  });
+});
+</script>
+</body>
+</html>

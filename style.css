@@ -1,0 +1,457 @@
+/* =========================
+   CSS NETTOYÉ & FUSIONNÉ
+   Remplace ton CSS actuel par ce bloc
+   ========================= */
+
+/* Variables utiles */
+:root {
+  --body-vertical-padding: 4rem; /* top+bottom du body (par défaut 2rem + 2rem) */
+  --sidebar-top-offset: 2rem;    /* padding-top du body */
+}
+
+/* ===== Body (fusion de tes définitions) ===== */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 0;
+  background: linear-gradient(180deg, #e0f0ff 0%, #f4f7ff 100%);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===== Login / Hero (inchangé) ===== */
+.login-hero {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 200px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(20,30,60,0.08);
+}
+.illustration-side {
+  flex: 1 1 50%;
+  background: linear-gradient(135deg,#f0f4ff,#ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.illustration-side img { max-width: 100%; height: auto; }
+
+.auth-card {
+  flex: 1 1 50%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.auth-card h4 { font-weight: 600; margin-bottom: 1rem; }
+.btn-login {
+  background: linear-gradient(90deg,#5566ff,#8ea7ff);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+.small-muted { color: #6b7280; font-size: 0.9rem; }
+
+@media (max-width: 767.98px) {
+  .login-hero { flex-direction: column; }
+  .illustration-side, .auth-card { flex: none; width: 100%; }
+}
+
+/* ===== Card centrale (fusion) ===== */
+.card-central,
+.card.p-4.shadow { /* on cible .card.p-4.shadow comme ta card principale */
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(20,30,60,0.08);
+  padding: 2rem;
+  width: 60%;
+  max-width: 100px;
+  margin: 0 auto;
+}
+
+/* Title */
+.card-central h3,
+.card.p-4.shadow h3 {
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2b3a42;
+}
+
+/* ===== Product cards (fusion et réduction) ===== */
+/* On cible .card.h-100 (tes cartes produit) */
+.card.h-100,
+.product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(20,30,60,0.08);
+  transition: transform .18s ease, box-shadow .18s ease, opacity .3s ease;
+  max-width: 100px;    /* contrôle largeur max par carte */
+  margin: 0 auto;
+}
+
+/* image réduite */
+.card.h-100 img.card-img-top,
+.product-card img {
+  width: 100%;
+  height: 60px;       /* hauteur réduite - change si besoin */
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+/* corps plus compact */
+.card.h-50 .card-body,
+.product-card .card-body {
+  text-align: center;
+  padding: 0.75rem;
+}
+.card.h-50 .card-title,
+.product-card .card-title { font-size: 1rem; font-weight: 200; margin-bottom: .25rem; }
+.card.h-50 .card-text,
+.product-card .card-text { font-size: .82rem; color: #6b7280; }
+.card.h-50 .fw-bold,
+.product-card .fw-bold { font-size: .95rem; color: #2b3a42; font-weight: 700; margin-top:.35rem; }
+
+/* boutons compacts */
+.card.h-50 .btn,
+.product-card .btn,
+.btn-add-cart {
+  padding: .35rem .6rem;
+  font-size: .88rem;
+  border-radius: 10px;
+}
+
+/* Hover doux */
+.card.h-50:hover,
+.product-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(20,30,60,0.14);
+}
+
+/* ===== Grid produit (override bootstrap row/cols) ===== */
+/* On transforme la row des produits en grid compact */
+.card.p-4.shadow > .row,
+.card.p-4.shadow .row,
+.card-central > .row,
+.card-central .row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.9rem;
+  align-items: start;
+}
+
+/* responsive grid adjustments */
+@media (max-width: 50px) {
+  .card.h-100 img.card-img-top,
+  .product-card img { height: 120px; }
+  .card.p-4.shadow > .row,
+  .card.p-4.shadow .row,
+  .card-central > .row,
+  .card-central .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card-central { padding: 1rem; width: 95%; }
+}
+
+/* ===== Pagination (fusion) ===== */
+.pagination .page-link {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b3a42;
+}
+.pagination .page-item.active .page-link {
+  background: linear-gradient(90deg,#5566ff,#8ea7ff);
+  border-color: transparent;
+  color: #fff;
+}
+.pagination .page-link:hover {
+  background: linear-gradient(90deg,#5566ff,#8ea7ff);
+  color: #fff;
+}
+
+/* ===== Sidebar (fusion, sans doublons) ===== */
+.sidebar {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(20,30,60,0.08);
+  padding: 1.5rem;
+  font-family: 'Inter', sans-serif;
+
+  /* comportement full-height sticky */
+  position: sticky;
+  top: var(--sidebar-top-offset);
+  height: calc(100vh - var(--body-vertical-padding));
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar h5 { font-weight: 600; color: #2b3a42; }
+.sidebar h6 { font-weight: 600; font-size: 0.99rem; margin-bottom: .5rem; }
+.sidebar input[type="text"] { border-radius: 12px; }
+.sidebar ul li { margin-bottom: .5rem; }
+.sidebar ul li input { margin-right: .5rem; }
+
+/* pousse le bouton Reset vers le bas si espace disponible */
+#resetFilters { margin-top: auto; border-radius: 12px; }
+
+/* slider couleur */
+.form-range { accent-color: #5566ff; }
+
+/* assure que les colonnes dans .container .row s'étirent */
+.container > .row { align-items: stretch; }
+/* Modal background overlay */
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.1); /* very light dim */
+}
+
+/* Modal content like the cart box */
+.modal-content {
+  background-color: #f5f9fb; /* very light gray/blue */
+  border-radius: 25px;        /* big rounded corners */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); /* soft shadow */
+  border: none;
+  padding: 30px 40px;
+  max-width: 700px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  animation: slideUpFade 0.3s ease forwards;
+}
+
+/* Modal header */
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 10px;
+}
+
+.modal-title {
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: #111;
+}
+
+/* Modal body layout */
+.modal-body {
+  display: flex;
+  gap: 30px;
+  padding-top: 15px;
+  align-items: center;
+}
+
+/* Product image */
+#modalImage {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  padding: 10px;
+}
+
+/* Text container */
+.modal-body > div {
+  flex: 1;
+}
+
+/* Description */
+#modalDescription {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* Price */
+#modalPrice {
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: #ff3b3f; /* bright red like checkout button */
+}
+
+/* Close button style */
+.btn-close {
+  filter: brightness(0.4);
+  transition: filter 0.2s ease;
+}
+
+.btn-close:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+
+/* Animation: slide modal up and fade in */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Style général du dropdown panier */
+#cart-menu {
+  max-height: 350px;            /* limite la hauteur */
+  overflow-y: auto;             /* scroll si beaucoup d’articles */
+  width: 300px !important;      /* largeur fixe propre */
+  border-radius: 12px;
+}
+
+/* Scroll personnalisé */
+#cart-menu::-webkit-scrollbar {
+  width: 6px;
+}
+#cart-menu::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* Produit dans le menu */
+#cart-menu li {
+  list-style: none;
+}
+
+#cart-menu img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Texte produit */
+#cart-menu .fw-semibold {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#cart-menu .text-muted {
+  font-size: 12px;
+}
+
+/* Ligne séparatrice */
+#cart-menu hr {
+  margin: 6px 0;
+}
+
+/* Bouton Voir le panier */
+#cart-menu a.btn-dark {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Badge du panier dans la navbar */
+#cart-count {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 50%;
+}
+/* --- MODAL DESIGN --- */
+.modal-content {
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0px 10px 35px rgba(0,0,0,0.15);
+    animation: fadeIn 0.3s ease;
+}
+
+/* Animation apparition */
+@keyframes fadeIn {
+    from { transform: translateY(-10px); opacity:0; }
+    to   { transform: translateY(0); opacity:1; }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #007bff, #0056d2);
+    color: white;
+    border-bottom: none;
+    padding: 20px;
+}
+
+.modal-title {
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.modal-body {
+    padding: 25px 30px !important;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 15px 25px;
+}
+
+/* --- IMAGE PREVIEW --- */
+#previewImage {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    background: #f8f8f8;
+    transition: all 0.2s ease-in-out;
+}
+
+#previewImage:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* --- FILE INPUT --- */
+#imageInput {
+    margin-top: 10px;
+}
+
+/* --- FORM INPUTS --- */
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    transition: all .2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,.2);
+}
+
+/* --- BUTTONS --- */
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0055cc);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0064e0, #004bbe);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    border-radius: 12px;
+    padding: 10px 20px;
+}
+
