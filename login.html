@@ -39,6 +39,7 @@
 
                 <div class="d-grid mb-3">
                     <button type="submit" class="btn btn-login">Se connecter</button>
+
                 </div>
 
 
@@ -93,6 +94,52 @@
             });
         });
     </script>
+    <script>
+       
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("https://dummyjson.com/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) {
+      alert("Identifiants incorrects");
+      return;
+    }
+
+    const data = await res.json();
+
+    // 👉 ENREGISTRE LE TOKEN DANS localStorage
+    localStorage.setItem("accessToken", data.token);
+
+    // 👉 REDIRECTION VERS PRODUITS
+    window.location.href = "product.html";
+
+  } catch (err) {
+    console.error(err);
+    alert("Erreur serveur lors de la connexion");
+  }
+});
+
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // empêche rechargement page
+
+    // ici tu mettras ton code login API
+
+    // 👉 REDIRECTION APRÈS CONNEXION
+    window.location.href = "product.html";
+});
+</script>
+
+
 
 </body>
 
